@@ -1,1 +1,8 @@
 build-base
+postgresql-dev
+tzdata
+git
+curl
+libc6-compat 
+libxml2-dev 
+libxslt-dev
