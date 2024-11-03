@@ -1,0 +1,49 @@
+
+
+<%= link_to "Back to Documents", documents_path %>
+<h1><%= @document.name %></h1>
+
+<% if @document.file.attached? %>
+  <p>
+    <%= link_to "Download File", rails_blob_path(@document.file, disposition: "attachment") %>
+
+    <h2>PDF Preview:</h2>
+ <div id="pdf-viewer" style="width: 100%; height: 800px;"></div>
+  </p>
+<% else %>
+  <p>No file attached.</p>
+<% end %>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+<script>
+  const chunks = <%= raw @chunks.to_json %>;
+  const url = "<%= rails_blob_path(@document.file, disposition: "attachment") %>";
+  const colors = ["#FFB6C1", "#ADD8E6", "#90EE90", "#FFFFE0", "#FFC0CB"]; // Example colors
+
+  pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js";
+
+  async function loadPDF(url) {
+    const pdf = await pdfjsLib.getDocument(url).promise;
+    const viewer = document.getElementById("pdf-viewer");
+    viewer.innerHTML = ""; // Clear the viewer
+
+    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+      const page = await pdf.getPage(pageNum);
+      const viewport = page.getViewport({ scale: 1.5 });
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
+
+      canvas.height = viewport.height;
+      canvas.width = viewport.width;
+      viewer.appendChild(canvas);
+
+      await page.render({ canvasContext: context, viewport: viewport }).promise;
+
+      // Highlight each chunk
+     // const textContent = await page.getTextContent();
+     // highlightChunks(context, textContent, viewport);
+    }
+  }
+
+  loadPDF(url);
+</script>

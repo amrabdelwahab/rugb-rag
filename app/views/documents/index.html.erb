@@ -1,0 +1,44 @@
+<%# app/views/documents/index.html.erb %>
+
+<h1>Uploaded Documents</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <%= form_with model: @document, local: true, html: { id: "uploadForm" } do |form| %>
+  <p>
+    <%= form.label :file, "Upload a new document" %><br>
+    <%= form.file_field :file, id: "fileInput" %>
+  </p>
+<% end %>
+
+    <% @documents.each do |document| %>
+      <tr>
+        <td><%= link_to document.name, document_path(document) %></td>
+        <td>
+           <%= form_with(model: document, method: :delete, local: true, style: "display:inline;") do |form| %>
+            <%= form.submit "Delete", data: { confirm: "Are you sure?" } %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const fileInput = document.getElementById("fileInput");
+    const uploadForm = document.getElementById("uploadForm");
+
+    fileInput.addEventListener("change", function() {
+      if (fileInput.files.length > 0) {
+        uploadForm.submit();
+      }
+    });
+  });
+</script>

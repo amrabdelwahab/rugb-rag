@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    Ascii85 (1.1.1)
     actioncable (7.2.2)
       actionpack (= 7.2.2)
       activesupport (= 7.2.2)
@@ -74,6 +75,7 @@ GEM
       tzinfo (~> 2.0, >= 2.0.5)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
+    afm (0.2.2)
     ast (2.4.2)
     base64 (0.2.0)
     benchmark (0.3.0)
@@ -103,8 +105,18 @@ GEM
     diff-lcs (1.5.1)
     drb (2.2.1)
     erubi (1.13.0)
+    event_stream_parser (1.0.0)
+    faraday (2.12.0)
+      faraday-net_http (>= 2.0, < 3.4)
+      json
+      logger
+    faraday-multipart (1.0.4)
+      multipart-post (~> 2)
+    faraday-net_http (3.3.0)
+      net-http
     globalid (1.2.1)
       activesupport (>= 6.1)
+    hashery (2.1.2)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
     io-console (0.7.2)
@@ -130,6 +142,11 @@ GEM
     mini_mime (1.1.5)
     minitest (5.25.1)
     msgpack (1.7.3)
+    multipart-post (2.4.1)
+    neighbor (0.5.0)
+      activerecord (>= 7)
+    net-http (0.4.1)
+      uri
     net-imap (0.5.0)
       date
       net-protocol
@@ -148,6 +165,12 @@ GEM
     parser (3.3.5.1)
       ast (~> 2.4.1)
       racc
+    pdf-reader (2.12.0)
+      Ascii85 (~> 1.0)
+      afm (~> 0.2.1)
+      hashery (~> 2.0)
+      ruby-rc4
+      ttfunk
     pg (1.5.9)
     psych (5.1.2)
       stringio
@@ -196,6 +219,10 @@ GEM
     rake (13.2.1)
     rdoc (6.7.0)
       psych (>= 4.0.0)
+    redis (5.3.0)
+      redis-client (>= 0.22.0)
+    redis-client (0.22.2)
+      connection_pool
     regexp_parser (2.9.2)
     reline (0.5.10)
       io-console (~> 0.5)
@@ -245,7 +272,12 @@ GEM
       rubocop-minitest
       rubocop-performance
       rubocop-rails
+    ruby-openai (7.3.1)
+      event_stream_parser (>= 0.3.0, < 2.0.0)
+      faraday (>= 1)
+      faraday-multipart (>= 1)
     ruby-progressbar (1.13.0)
+    ruby-rc4 (0.1.5)
     rubyzip (2.3.2)
     securerandom (0.3.1)
     selenium-webdriver (4.26.0)
@@ -254,6 +286,11 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    sidekiq (7.3.4)
+      connection_pool (>= 2.3.0)
+      logger
+      rack (>= 2.2.4)
+      redis-client (>= 0.22.2)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -264,9 +301,14 @@ GEM
     stringio (3.1.1)
     thor (1.3.2)
     timeout (0.4.1)
+    tokenizers (0.5.3-aarch64-linux-musl)
+    tokenizers (0.5.3-x86_64-linux)
+    ttfunk (1.8.0)
+      bigdecimal (~> 3.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.6.0)
+    uri (0.13.1)
     useragent (0.16.10)
     web-console (4.2.1)
       actionview (>= 6.0.0)
@@ -292,13 +334,19 @@ DEPENDENCIES
   capybara
   debug
   jbuilder
+  neighbor (~> 0.5.0)
+  pdf-reader (~> 2.12)
   pg (~> 1.1)
   puma (>= 5.0)
   rails (~> 7.2.2)
+  redis (~> 5.3)
   rspec-rails (~> 7.0)
   rubocop-rails-omakase
+  ruby-openai (~> 7.3)
   selenium-webdriver
+  sidekiq (~> 7.3)
   sprockets-rails
+  tokenizers (~> 0.5.3)
   tzinfo-data
   web-console
 
