@@ -8,7 +8,7 @@ class QuestionsController < ApplicationController
     @question = params[:question]
 
     # Retrieve relevant document chunks based on the question
-    @retrieved_chunks = ChunkRetriever.new(question: @question).retrieve_chunks.includes(:document)
+    @retrieved_chunks = ChunkRetriever.new(question: @question).retrieve_chunks
 
     render :show
   end
