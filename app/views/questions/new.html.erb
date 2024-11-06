@@ -1,0 +1,12 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div class="bg-white p-8 rounded shadow-lg max-w-md w-full">
+    <h2 class="text-2xl font-bold mb-6 text-center">Ask a Question</h2>
+    <%= form_with url: questions_path, method: :post, class: "space-y-4" do |form| %>
+      <div>
+        <%= form.label :question, "Enter your question", class: "block font-medium text-gray-700" %>
+        <%= form.text_field :question, class: "mt-2 w-full p-2 border border-gray-300 rounded" %>
+      </div>
+      <%= form.submit "Retrieve Documents", class: "w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600" %>
+    <% end %>
+  </div>
+</div>

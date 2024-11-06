@@ -1,21 +1,34 @@
+<!-- app/views/documents/show.html.erb -->
+<div class="min-h-screen bg-gray-100 p-8">
+  <div class="max-w-3xl mx-auto bg-white p-6 rounded shadow-lg">
+    <%= link_to "Back to Documents", documents_path, class: "text-blue-500 hover:underline" %>
 
+    <h1 class="text-2xl font-bold mb-4 mt-4"><%= @document.name %></h1>
 
-<%= link_to "Back to Documents", documents_path %>
-<h1><%= @document.name %></h1>
+    <% if @document.file.attached? %>
+      <div class="mb-6">
+        <%= link_to "Download File", rails_blob_path(@document.file, disposition: "attachment"), 
+            class: "text-blue-500 hover:underline" %>
+      </div>
 
-<% if @document.file.attached? %>
-  <p>
-    <%= link_to "Download File", rails_blob_path(@document.file, disposition: "attachment") %>
+      <div class="mb-6">
+        <h2 class="text-xl font-semibold mb-2">PDF Preview:</h2>
+        <%= tag.iframe src: rails_blob_url(@document.file, disposition: "inline"), width: "100%", height: "600px", 
+            class: "border border-gray-300 rounded shadow" %>
+      </div>
 
-    <h2>PDF Preview:</h2>
-<%= tag.iframe src: rails_blob_url(@document.file, disposition: "inline"), width: "100%", height: "600px" %>
- <h2>Chunks</h2>
- <ul>
- <% @chunks.each do |chunk|%>
-  <li> <%= chunk %></li>
- <% end %>
- </ul>
-  </p>
-<% else %>
-  <p>No file attached.</p>
-<% end %>
+      <div>
+        <h2 class="text-xl font-semibold mb-2">Document Chunks</h2>
+        <ul class="space-y-4">
+          <% @chunks.each do |chunk| %>
+            <li class="p-4 bg-gray-50 border border-gray-200 rounded shadow">
+              <%= chunk %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% else %>
+      <p class="text-gray-500">No file attached.</p>
+    <% end %>
+  </div>
+</div>

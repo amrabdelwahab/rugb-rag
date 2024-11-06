@@ -8,7 +8,7 @@ class EmbeddingGenerator
     response = @client.embeddings(
       parameters: {
         model: @model, 
-        input: @text
+        input: text
       }
     )
     response['data'][0]['embedding']

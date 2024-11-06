@@ -1,35 +1,45 @@
-<%# app/views/documents/index.html.erb %>
+<!-- app/views/documents/index.html.erb -->
+<div class="min-h-screen bg-gray-100 p-8">
+  <div class="max-w-4xl mx-auto bg-white p-6 rounded shadow-lg">
+    <h1 class="text-2xl font-bold mb-6">Uploaded Documents</h1>
 
-<h1>Uploaded Documents</h1>
+    <!-- Upload Form -->
+    <div class="mb-6">
+      <%= form_with model: @document, local: true, html: { id: "uploadForm" } do |form| %>
+        <div class="flex items-center space-x-4">
+          <%= form.label :file, "Upload a new document", class: "font-medium text-gray-700" %>
+          <%= form.file_field :file, id: "fileInput", class: "block w-full text-sm text-gray-600 border border-gray-300 rounded p-2" %>
+        </div>
+      <% end %>
+    </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-  <%= form_with model: @document, local: true, html: { id: "uploadForm" } do |form| %>
-  <p>
-    <%= form.label :file, "Upload a new document" %><br>
-    <%= form.file_field :file, id: "fileInput" %>
-  </p>
-<% end %>
+    <!-- Documents Table -->
+    <table class="min-w-full bg-white border border-gray-200 rounded">
+      <thead>
+        <tr class="bg-gray-100 border-b">
+          <th class="py-3 px-6 text-left text-gray-600 font-medium">Name</th>
+          <th class="py-3 px-6 text-left text-gray-600 font-medium">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @documents.each do |document| %>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="py-3 px-6">
+              <%= link_to document.name, document_path(document), class: "text-blue-500 hover:underline" %>
+            </td>
+            <td class="py-3 px-6">
+              <%= form_with(model: document, method: :delete, local: true, style: "display:inline;") do |form| %>
+                <%= form.submit "Delete", data: { confirm: "Are you sure?" }, class: "bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-    <% @documents.each do |document| %>
-      <tr>
-        <td><%= link_to document.name, document_path(document) %></td>
-        <td>
-           <%= form_with(model: document, method: :delete, local: true, style: "display:inline;") do |form| %>
-            <%= form.submit "Delete", data: { confirm: "Are you sure?" } %>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+<!-- JavaScript for File Upload Auto-Submit -->
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     const fileInput = document.getElementById("fileInput");

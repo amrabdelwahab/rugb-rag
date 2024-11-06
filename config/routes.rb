@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
+  resources :questions, only: [:new, :create] do
+    post :generate_answer, on: :collection
+  end
   # Defines the root path route ("/")
   # root "posts#index"
 end

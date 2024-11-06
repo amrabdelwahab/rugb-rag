@@ -1,0 +1,28 @@
+<!-- app/views/questions/show.html.erb -->
+<div class="min-h-screen bg-gray-100 p-8">
+  <div class="max-w-3xl mx-auto bg-white p-6 rounded shadow-lg">
+    <h2 class="text-xl font-bold mb-4">Relevant Document Chunks</h2>
+    
+    <% if @retrieved_chunks.any? %>
+      <% @retrieved_chunks.each do |chunk| %>
+        <div class="p-4 mb-4 border border-gray-200 rounded bg-gray-50">
+          <!-- Display the document title associated with the chunk -->
+          <h3 class="text-lg font-semibold text-gray-800 mb-2"><%= chunk.document.name %></h3>
+          <p class="text-gray-700"><%= chunk.content %></p>
+        </div>
+      <% end %>
+
+      <%= form_with url: generate_answer_questions_path, method: :post, class: "mt-6" do |form| %>
+        <%= form.hidden_field :question, value: @question %>
+
+        <% @retrieved_chunks.each_with_index do |chunk, index| %>
+          <%= form.hidden_field "chunks[]", value: chunk.content %>
+        <% end %>
+
+        <%= form.submit "Generate Answer with GPT-4", class: "w-full bg-green-500 text-white p-2 rounded hover:bg-green-600" %>
+      <% end %>
+    <% else %>
+      <p class="text-gray-500">No relevant document chunks found for your question.</p>
+    <% end %>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 class TextChunker
-  def initialize(text:, sliding_window_tokens: 100, overlap_tokens: 20 )
+  def initialize(text:, sliding_window_tokens: 500, overlap_tokens: 100 )
     @text = text
     @sliding_window_tokens = sliding_window_tokens
     @overlap_tokens = overlap_tokens

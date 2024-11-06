@@ -1,0 +1,25 @@
+<!-- app/views/questions/answer.html.erb -->
+<div class="min-h-screen bg-gray-100 p-8">
+  <div class="max-w-3xl mx-auto bg-white p-6 rounded shadow-lg">
+    <h2 class="text-2xl font-bold mb-4">Generated Answer</h2>
+
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold text-gray-800">Question:</h3>
+      <p class="text-gray-700"><%= @question %></p>
+    </div>
+
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold text-gray-800">Answer:</h3>
+      <p class="text-gray-700 bg-gray-50 p-4 rounded"><%= @answer %></p>
+    </div>
+
+    <div>
+      <h3 class="text-lg font-semibold text-gray-800">Context Chunks:</h3>
+      <% @retrieved_chunks.each do |chunk| %>
+        <div class="p-4 mt-2 bg-gray-50 border border-gray-200 rounded">
+          <p class="text-gray-700"><%= chunk %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
