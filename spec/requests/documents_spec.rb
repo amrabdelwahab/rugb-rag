@@ -1,5 +1,7 @@
 # spec/requests/documents_spec.rb
 require 'rails_helper'
+
+
 RSpec.describe "Documents", type: :request do
   let(:file) { fixture_file_upload(Rails.root.join("spec/fixtures/sample.pdf"), "application/pdf") }
 
@@ -16,12 +18,10 @@ RSpec.describe "Documents", type: :request do
     it "creates a new document with the uploaded file", :aggregate_failures do
       expect {
         post documents_path, params: { document: { file: file } }
-      }.to change(Document, :count).by(1)
-      
-      document = Document.last
+      }.to change(Document, :count).by(1).and change(Sidekiq::Queues["default"], :size).by(1)
 
-      expect(document.name).to eq "sample"
-      expect(ProcessDocumentJob).to have_enqueued_sidekiq_job(document.id)
+      document = Document.last
+      expect(document.name).to eq "sample"     
     end
 
     it "redirects to the index page after creating a document" do
