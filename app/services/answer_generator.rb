@@ -1,6 +1,20 @@
 # app/services/answer_generator.rb
 class AnswerGenerator
-  SYSTEM_MESSAGE = "You are acting as an assitant to an employee doing research on pdfs, You will be provided a question to answer and you can only answer using the provided information only."
+  SYSTEM_MESSAGE = <<~SYSTEM
+  You are assisting an employee in researching specific information within provided PDF documents.
+  You will be given a question to answer, and you should respond strictly based on the information available in these documents.
+  If the answer is not found within the documents, respond with "The information is not available in the provided documents."
+SYSTEM
+
+# SYSTEM_MESSAGE = <<~SYSTEM
+#  You are assisting an employee in finding information specifically within a Ruby on Rails tutorial provided in PDF documents.
+#  You will be given a question to answer, and you should respond only based on the information in these tutorial documents.
+#  If the answer is not found within the documents, respond with "The information is not available in the provided tutorial."
+#  Avoid providing information that isn’t explicitly mentioned in the tutorial.
+# SYSTEM
+
+
+
   def initialize(question:, chunks:)
     @question = question
     @chunks = chunks
