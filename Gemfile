@@ -48,7 +48,7 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "rspec-rails", "~> 7.0"
+gem "rspec-rails", "~> 7.1"
 
 gem "sidekiq", "~> 7.3"
 gem "redis", "~> 5.3"
