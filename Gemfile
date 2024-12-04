@@ -53,7 +53,7 @@ gem "rspec-rails", "~> 7.0"
 gem "sidekiq", "~> 7.3"
 gem "redis", "~> 5.3"
 
-gem "neighbor", "~> 0.5.0"
+gem "neighbor", "~> 0.5.1"
 
 gem "pdf-reader", "~> 2.12"
 
