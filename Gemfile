@@ -57,6 +57,6 @@ gem "neighbor", "~> 0.5.0"
 
 gem "pdf-reader", "~> 2.12"
 
-gem "tokenizers", "~> 0.5.3"
+gem "tokenizers", "~> 0.5.4"
 
 gem "ruby-openai", "~> 7.3"
